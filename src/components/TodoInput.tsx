@@ -10,7 +10,9 @@ export function TodoInput({ addTask }: TodoInputProps) {
   const [task, setTask] = useState('');
 
   const handleAddNewTask = () => {
-    task != '' ? addTask(task) : null;
+    if(!task)
+      return;
+    addTask(task);
     setTask('');
   };
 
@@ -24,13 +26,13 @@ export function TodoInput({ addTask }: TodoInputProps) {
         selectionColor="#666666"
         value={task}
         onChangeText={setTask}
-        onSubmitEditing={(e) => addTask(e.nativeEvent.text)}
+        onSubmitEditing={handleAddNewTask}
       />
       <TouchableOpacity
         testID="add-new-task-button"
         activeOpacity={0.7}
         style={styles.addButton}
-        onPress={() => task != '' && handleAddNewTask}
+        onPress={handleAddNewTask}
       >
         <Icon name="chevron-right" size={24} color="#B2B2B2" />
       </TouchableOpacity>
